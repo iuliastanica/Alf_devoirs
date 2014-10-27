@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p> Verify if the expressions respect the Penguin Language and evaluate the operations. <br>
+ALF1=4 <(^) <br>
+ALF2=ALF1+5 <(^) <br>
+ </p>
+
+<button onclick="myFunction()">Try it</button>
+
+<p id="demo"> </p>
+
+<script>
+function myFunction() {
+    var str = "ALF1=4 <(^)";
+    var str2= "ALF2=ALF1+5 <(^)";
+    
+    var parts1=str.split('<'); //split before the penguin's beak
+    var parts2=str2.split('<');
+
+    var n = parts1[0].split('=')[0]+' has the value '+eval(parts1[0])+"<br>"; //evaluates the whole Mumbling expression
+    var p = parts2[0].split('=')[0]+' has the value '+eval(parts2[0])+"<br>";
+
+    var res="<(\")happy! <br>"+n+p;
+    var error="(\'^\')mad!!! He doesn't understand the language!";
+
+
+ var a=/(([a-zA-Z]){3}\d[ ]*=[ ]*)((\d+)|(((([a-zA-Z]){3}\d[ ]*)|(\d+[]*))((\+)|(\-)|(\*)|(\|))[ ]*\d+))([ ]*<[(]\^[)])/g.test(str2);
+//tests if the input respects the penguin form
+ var b=/(([a-zA-Z]){3}\d[ ]*=[ ]*)((\d+)|(((([a-zA-Z]){3}\d[ ]*)|(\d+[]*))((\+)|(\-)|(\*)|(\|))[ ]*\d+))([ ]*<[(]\^[)])/g.test(str);
+
+if (a&&b) //if both input variables have the good form
+ {document.getElementById("demo").innerHTML=res;   }
+else
+{ document.getElementById("demo").innerHTML=error;
+}                      
+   
+    
+    
+}
+</script>
+
+</body>
+</html>
+
+
+
+
+RegExp: 
+
+(([a-zA-Z]){3}\d[ ]*=[ ]*)((\d+)|(((([a-zA-Z]){3}\d[ ]*)|(\d+[]*))((\+)|(\-)|(\*)|(\|))[ ]*\d+))([ ]*<[(]\^[)])
