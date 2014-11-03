@@ -1,0 +1,37 @@
+﻿start
+=ifstatement/(statement)*
+
+statement
+=left:variable " = " right:integer terminator {return right}
+/left:variable " = " right:additive terminator{return right}
+/left:variable " = " right:multiplicative terminator {return right}
+/left:variable " = " right:substraction terminator{return right}
+/left:variable " = " right:division terminator{return right}
+
+ifstatement
+="wth"["  "]* left:(variable/integer) " == " right:(variable/integer) terminator {return eval(left)==eval(right)}
+/"wth"["  "]* left:(variable/integer) " < " right:(variable/integer) terminator {return (left<right)}
+/"wth"["  "]* left:(variable/integer) " > " right:(variable/integer) terminator {return (left>right)}
+
+additive 
+=left:integer "+" right:integer {return left+right}
+
+multiplicative
+=left:integer "*" right:integer {return left*right}
+
+substraction
+=left:integer "-" right:integer{return left-right}
+
+division
+=left:integer "/" right:integer{if (right==0) return "WTF???"; else return left/right}
+
+variable
+=[A-Za-z]+
+
+integer "integer"
+=digits:[0-9]+ {return parseInt(digits.join(""),10);}
+
+terminator
+=["  "]*"€"
+
+Useful link: https://github.com/kragen/peg-bootstrap/blob/master/peg.md
