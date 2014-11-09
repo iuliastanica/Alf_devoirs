@@ -1,20 +1,27 @@
 ﻿start
-=ifstatement/(statement)*
+=(stuff)*
+
+stuff=
+statement
+/declaration
+/ifstatement
 
 statement
-=left:variable " = " right:integer terminator {return right}
-/left:variable " = " right:additive terminator{return right}
-/left:variable " = " right:multiplicative terminator {return right}
-/left:variable " = " right:substraction terminator{return right}
-/left:variable " = " right:division terminator{return right}
+=left:variable " = " right:additive terminator line{return right}
+/left:variable " = " right:multiplicative terminator line {return right}
+/left:variable " = " right:substraction terminator line{return right}
+/left:variable " = " right:division terminator line{return right}
+
+declaration
+=declaration: (left:variable " = " right:integer) terminator line {return String(declaration).split('=')[1]}
 
 ifstatement
 ="wth"["  "]* left:(variable/integer) " == " right:(variable/integer) terminator {return eval(left)==eval(right)}
 /"wth"["  "]* left:(variable/integer) " < " right:(variable/integer) terminator {return (left<right)}
 /"wth"["  "]* left:(variable/integer) " > " right:(variable/integer) terminator {return (left>right)}
 
-additive 
-=left:integer "+" right:integer {return left+right}
+additive
+=add: (left:(integer/variable) "+" right:(integer/variable)) {return add}
 
 multiplicative
 =left:integer "*" right:integer {return left*right}
@@ -26,12 +33,15 @@ division
 =left:integer "/" right:integer{if (right==0) return "WTF???"; else return left/right}
 
 variable
-=[A-Za-z]+
+=[A-Za-z]+ 
 
 integer "integer"
 =digits:[0-9]+ {return parseInt(digits.join(""),10);}
 
 terminator
 =["  "]*"€"
+
+line
+=[\n]*
 
 Useful link: https://github.com/kragen/peg-bootstrap/blob/master/peg.md
