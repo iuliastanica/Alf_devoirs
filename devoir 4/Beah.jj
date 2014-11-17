@@ -1,0 +1,68 @@
+PARSER_BEGIN(Beah)
+
+public class Beah {
+    public static void main(String[] args) throws ParseException, Exception
+	{
+	try {
+        Beah start = new Beah(System.in);
+		while (true)
+			{ start.Input(); }
+		}
+		
+	catch(ParseException e)
+		{
+			System.out.println(e.getMessage());
+			System.out.println("\t (\'^\')mad!!! He doesn't understand the language!"); }
+		}
+		
+    }
+
+
+PARSER_END(Beah)
+
+SKIP:  { " "|"\t" | "\r"  }
+                
+TOKEN: { <NUMBER: (("-")? <INT>) | (("-")? <INT> "." <INT>)| <ZERO> >}
+TOKEN: { <VARIABLE: (<ID>)+ >}
+TOKEN: {<#INT: (["0"-"9"])+ >}
+TOKEN: {<#ZERO: "0" >}
+TOKEN: {<#ID: ["a"-"z","A"-"Z"]> }
+TOKEN: {<TERMINATOR: "<(^)">}
+TOKEN: {<EOP: "('^')">}
+TOKEN: {< EOL: "\n" >}
+TOKEN : 
+{ 
+	  <ASSIGN : "=">  
+	| <PLUS : "+" >  
+	| <MINUS:"-"> 
+	| <MULTIPLY:"*"> 
+	| <DIVIDE:"/"> 
+	
+}
+
+TOKEN:
+{
+	  <EQUAL: "==" > 
+	| <LESSEQUAL: "<=" > 
+	| <LESS: "<" > 
+	| <GREATEREQUAL: ">=" > 
+	| <GREATER: ">" > 
+	| <DIFFERENT: "!=" > 
+	
+}
+
+void Input() :
+{}
+{   
+     Verif() ("\n")* 
+	 |<EOP> {System.out.println("<(\")happy!"); System.exit(-1);}
+	 |<EOL>
+	 |<EOF>
+}
+
+void Verif():
+{}
+{
+< VARIABLE >< ASSIGN >(<VARIABLE> | < NUMBER >)(( <PLUS> | <MINUS> | <MULTIPLY> | <DIVIDE> )(<VARIABLE> | < NUMBER >))?<TERMINATOR>
+}
+
