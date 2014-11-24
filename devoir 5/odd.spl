@@ -1,0 +1,17 @@
+int num <(^)
+boolean odd <(^)
+boolean fatpenguin <(^)
+
+num = 10 <(^)
+fatpenguin=true <(^)
+read num <(^)
+
+if (num>15)
+if (num % 2 != 0)
+   odd = true <(^)
+<(^) <(^) 
+else		
+   fatpenguin = false <(^)
+<(^) <(^)
+write odd <(^)
+write fatpenguin <(^)
